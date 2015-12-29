@@ -26,7 +26,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="README.md" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Invoke.ps1" />
     <Compile Include="POSHOrigin_ActiveDirectoryDNS.psd1" />

@@ -21,7 +21,6 @@ $type = $Options.Resource.split(':')[1]
 $hash = @{
     Name = $Options.Name
     Ensure = $Options.options.Ensure
-    Credential = $Options.Options.Secrets.DnsAdmin.Credential
     DnsServer = $Options.Options.DnsServer
     ZoneName = $Options.Options.ZoneName
 }
@@ -42,6 +41,17 @@ switch ($type) {
             if ($null -ne $Options.Options.AgeRecord) {
                 $hash.AgeRecord = [bool]$Options.Options.AgeRecord
             }
+
+            # Credentials may be specified in line. Test for that
+            if ($Options.Options.Credential -is [pscredential]) {
+                $hash.Credential = $Options.Options.Credential
+            }
+
+            # Credentials may be listed under secrets. Test for that
+            if ($Options.options.secrets.Credential) {
+                $hash.Credential = $Options.options.secrets.credential.credential
+            }
+
             return $hash
         } else {
             $confName = "$type" + '_' + $Options.Name
@@ -53,13 +63,23 @@ switch ($type) {
 
                 Import-DscResource -Name ARecord -ModuleName POSHOrigin_ActiveDirectoryDNS
 
+                # Credentials may be specified in line. Test for that
+                if ($Options.Options.Credential -is [pscredential]) {
+                    $cred = $Options.Options.Credential
+                }
+
+                # Credentials may be listed under secrets. Test for that
+                if ($Options.options.secrets.Credential) {
+                    $cred = $Options.options.secrets.credential.credential
+                }
+
                 ARecord $ResourceOptions.Name {
                     Ensure = $ResourceOptions.options.Ensure
                     Name = $ResourceOptions.Name
                     IPAddress = ([IPAddress]::Parse($ResourceOptions.Options.IPAddress).ToString())
                     ZoneName = $ResourceOptions.options.ZoneName
                     DnsServer = $ResourceOptions.options.DnsServer
-                    Credential = $ResourceOptions.options.Secrets.DnsAdmin.Credential
+                    Credential = $cred
                     TTL = $ResourceOptions.options.TTL
                     CreatePtr = $ResourceOptions.options.CreatePtr
                     AllowUpdateAny = $ResourceOptions.options.AllowUpdateAny
