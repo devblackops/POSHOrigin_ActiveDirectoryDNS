@@ -2,7 +2,7 @@
 POSHOrigin_ActiveDirectoryDNS is a set of PowerShell 5 based DSC resources for managing Active Directory DNS objects via DSC.
 
 ## Overview
-POSHOrigin_ActiveDirectoryDNS is a set of PowerShell 5 based DSC resources for managing Active Directory DNS objects via DSC. These resources are designed to be used with POSHOrigin as a Infrastructure as Code framework, but can be used natively by standard DSC configurations as well. Integration with POSHOrigin is accomplished via a separate 'Invoke.ps1' script included in the module.
+POSHOrigin_ActiveDirectoryDNS is a set of PowerShell 5 based DSC resources for managing Active Directory DNS objects via DSC. These resources are designed to be used with [POSHOrigin](https://github.com/devblackops/POSHOrigin) as a Infrastructure as Code framework, but can be used natively by standard DSC configurations as well. Integration with [POSHOrigin](https://github.com/devblackops/POSHOrigin) is accomplished via a separate 'Invoke.ps1' script included in the module.
 
 ## Resources List
 * ARecord
