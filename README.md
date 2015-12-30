@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/devblackops/POSHOrigin_ActiveDirectoryDNS.png?label=ready&title=Ready)](https://waffle.io/devblackops/POSHOrigin_ActiveDirectoryDNS)
 # POSHOrigin_ActiveDirectoryDNS
 POSHOrigin_ActiveDirectoryDNS is a set of PowerShell 5 based DSC resources for managing Active Directory DNS objects via DSC.
 
