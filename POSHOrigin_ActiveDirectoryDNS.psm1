@@ -23,11 +23,11 @@ class ARecord {
     [DscProperty(Mandatory)]
     [string]$IPAddress
 
-    [DscProperty()]
-    [int]$TTL
-
     [DscProperty(Mandatory)]
     [string]$ZoneName
+
+    [DscProperty()]
+    [int]$TTL
 
     [DscProperty()]
     [bool]$CreatePtr = $true
