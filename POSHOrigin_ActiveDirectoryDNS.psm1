@@ -38,9 +38,6 @@ class ARecord {
     [DscProperty()]
     [bool]$AgeRecord = $false
 
-    [DscProperty(NotConfigurable)]
-    [bool]$Exists = $false
-
     [Microsoft.Management.Infrastructure.CimSession]
     Init() {
         try {
@@ -76,10 +73,11 @@ class ARecord {
                 Write-Verbose -Message "Finding [A] Record: $($this.Name) in zone $($this.ZoneName)"
                 $record = Get-DnsServerResourceRecord @params -ErrorAction SilentlyContinue
                 if ($record) {
-                    $result.Exists = $true
                     $result.IPAddress = $record.RecordData.IPv4Address.ToString()
                     $result.AgeRecord = ($record.TimeStamp -eq $null)
                     $result.TTL = $record.TimeToLive.TotalSeconds
+                } else {
+                    $result.Ensure = [Ensure]::Absent
                 }
                 $cim | Remove-CimSession
             }
@@ -98,7 +96,7 @@ class ARecord {
             $record = $this.Get()
             switch ($this.Ensure) {
                 'Present' {
-                    if ($record.Exists) {
+                    if ($record.Ensure = [ensure]::Present) {
                     
                         # Get a copy of the DNS record
                         $params = @{
@@ -160,7 +158,7 @@ class ARecord {
                     }
                 }
                 'Absent' {
-                    if ($record) {
+                    if ($record.Ensure = [ensure]::Present) {
                         # Delete record
                         $params = @{
                             Name = $this.Name
@@ -188,27 +186,26 @@ class ARecord {
 
     [bool]Test() {
         $record = $this.Get()
+        $pass = $true
         switch($this.Ensure) {
             'Present' {
-                if ($record.Exists) {
+                if ($record.Ensure -eq [ensure]::Present) {
                     # Record exists, does it have the correct settings?
                     Write-Verbose -Message 'Record exists'
-                    return $true
                 } else {
                     Write-Verbose -Message 'Record does not exist'
-                    return $false
+                    $pass = $false
                 }
             }
             'Absent' {
-                if ($record.Exists) {
-                    Write-Verbose -Message 'Record exists'
-                    return $true
-                } else {
+                if ($record.Ensure -eq [ensure]::Absent) {
                     Write-Verbose -Message 'Record does not exist'
-                    return $false
+                } else {
+                    Write-Verbose -Message 'Record exists'
+                    $pass = $false
                 }
             }
         }
-        return $true
+        return $false
     }
 }
