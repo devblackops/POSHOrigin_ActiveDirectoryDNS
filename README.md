@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/w3h64v1fk7psfke8/branch/master?svg=true)](https://ci.appveyor.com/project/devblackops/poshorigin-activedirectorydns/branch/master)
+
 [![Stories in Ready](https://badge.waffle.io/devblackops/POSHOrigin_ActiveDirectoryDNS.png?label=ready&title=Ready)](https://waffle.io/devblackops/POSHOrigin_ActiveDirectoryDNS)
 
 # POSHOrigin_ActiveDirectoryDNS
