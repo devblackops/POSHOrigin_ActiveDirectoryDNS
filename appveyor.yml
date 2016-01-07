@@ -13,6 +13,8 @@ install:
 
 build: false
 
+clone_folder: c:\projects\POSHOrigin_ActiveDirectoryDNS
+
 test_script:
 # Test with native PS version
   - ps: . .\Tests\appveyor.pester.ps1
