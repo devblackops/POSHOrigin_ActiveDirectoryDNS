@@ -38,6 +38,7 @@
     <Compile Include="POSHOrigin_ActiveDirectoryDNS.psd1" />
     <Compile Include="POSHOrigin_ActiveDirectoryDNS.psm1" />
     <Compile Include="Tests\AppVeyor.Pester.ps1" />
+    <Compile Include="Tests\Manifest.Tests.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Examples\" />
