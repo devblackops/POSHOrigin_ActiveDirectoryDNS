@@ -33,6 +33,25 @@ Parameters
 | AllowUpdateAny  | bool         | False    | Indicates that any authenticated user can update a resource record that has the same owner name.. Default: False
 | AgeRecord       | bool         | False    | Indicates that the DNS server uses a time stamp for the resource record that this cmdlet adds. A DNS server can scavenge resource records that have become stale based on a time stamp. Default value: False
 
+### CName
+
+Created, modifies, or deletes a CNAME record object on an Active Directory DNS server.
+
+Parameters
+----------
+
+| Name            | Type         | Required | Description
+| :---------------|:-------------|:---------|:-----------|
+| Name            | string       | True     | The alias name for the record
+| Ensure          | string       | False    | Denotes if resource should exist or not exist
+| DnsServer       | string       | True     | The Active Directory DNS server to connect to
+| Credential      | pscredential | True     | Credentials with rights to manage Active Directory DNS records. In a POSHOrigin, credentials can be included under the 'secrets' hashtable or defined inline
+| FQDN            | string       | True     | Fully Qualified Domain Name the CNAME should point to
+| ZoneName        | string       | True     | DNS zone the record is associated with
+| TTL             | int          | False    | Time to live for A record
+| AllowUpdateAny  | bool         | False    | Indicates that any authenticated user can update a resource record that has the same owner name.. Default: False
+| AgeRecord       | bool         | False    | Indicates that the DNS server uses a time stamp for the resource record that this cmdlet adds. A DNS server can scavenge resource records that have become stale based on a time stamp. Default value: False
+
 ## POSHOrigin Example
 
 This example shows how to use the **ARecord** resource within the context of a [POSHOrigin](https://github.com/devblackops/POSHOrigin) configuration file.
