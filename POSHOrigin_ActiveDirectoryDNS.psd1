@@ -4,7 +4,7 @@
     RootModule = 'POSHOrigin_ActiveDirectoryDNS.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.1'
+    ModuleVersion = '1.1.1'
 
     # ID used to uniquely identify this module
     GUID = 'f60be00c-0f96-4ecb-9f82-b831bd21c981'
