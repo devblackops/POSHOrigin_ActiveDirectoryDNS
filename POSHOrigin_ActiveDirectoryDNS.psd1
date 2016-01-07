@@ -26,7 +26,7 @@
 
     # DSC resources to export from this module
     DscResourcesToExport = @('ARecord', 'CName')
-
+    
     PrivateData = @{
         PSData = @{
             Tags = @(
