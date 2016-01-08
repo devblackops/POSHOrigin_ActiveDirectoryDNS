@@ -22,7 +22,7 @@
     PowerShellVersion = '5.0'
 
     # Modules that must be imported into the global environment prior to importing this module
-    RequiredModules = 'DnsServer'
+    #RequiredModules = 'DnsServer'
 
     # DSC resources to export from this module
     DscResourcesToExport = @('ARecord', 'CName')
@@ -44,6 +44,8 @@
                 'Infrastructure as Code',
                 'IaC'
             )
+            
+            ExternalModuleDependencies = 'DnsServer'
         }
     }
 }
