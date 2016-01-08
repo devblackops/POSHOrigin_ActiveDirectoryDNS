@@ -68,7 +68,7 @@ class ARecord {
                 Name = $this.Name
                 Verbose = $false
             }
-            Write-Verbose -Message "Finding [A] Record: $($this.Name) in zone $($this.ZoneName)"
+            Write-Verbose -Message "Finding Record: $($this.Name) in zone $($this.ZoneName)"
             $record = Get-DnsServerResourceRecord @params -ErrorAction SilentlyContinue
             if ($record) {
                 $result.Ensure = [Ensure]::Present
@@ -122,7 +122,7 @@ class ARecord {
                                 CimSession = $cim
                                 Confirm = $true
                             }
-                            Write-Verbose -Message "Changing [A] record: $($this.Name) to IP address -> $($this.IPAddress) in zone $($this.ZoneName)"
+                            Write-Verbose -Message "Changing record: $($this.Name) to IP address -> $($this.IPAddress) in zone $($this.ZoneName)"
                             Set-DnsServerResourceRecord @params
                         }
 
@@ -153,7 +153,7 @@ class ARecord {
                             CimSession = $cim
                             Verbose = $false
                         }
-                        Write-Verbose -Message "Creating [A] record: $($this.Name) -> $($this.IPAddress) in zone $($this.ZoneName)"
+                        Write-Verbose -Message "Creating record: $($this.Name) -> $($this.IPAddress) in zone $($this.ZoneName)"
                         Add-DnsServerResourceRecordA @params
                     }
                 }
@@ -168,7 +168,7 @@ class ARecord {
                             Force = $true
                             Verbose = $false
                         }
-                        Write-Verbose -Message "Removing [A] record: $($this.Name) ($($this.IPAddress)) from zone $($this.ZoneName)"
+                        Write-Verbose -Message "Removing record: $($this.Name) ($($this.IPAddress)) from zone $($this.ZoneName)"
                         Remove-DnsServerResourceRecord @params
                     } else {
                         # Do nothing
@@ -185,7 +185,7 @@ class ARecord {
 
     [bool]Test() {
         $record = $this.Get()
-        Write-Verbose -Message "Validating that record $($this.Name) in ($($this.ZoneName)) is $($this.Ensure.ToString().ToLower())"        
+        Write-Verbose -Message "Validating that record $($this.Name) in $($this.ZoneName) is $($this.Ensure.ToString().ToLower())"        
         if ($this.Ensure -ne $record.Ensure) { return $false }
         elseif ($this.Ensure -eq [ensure]::Present -and ($record.IPAddress -ne $this.IPAddress)) { return $false }
         return $true
