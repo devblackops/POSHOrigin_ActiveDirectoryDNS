@@ -1,8 +1,7 @@
-resource 'POSHOrigin_ActiveDirectoryDNS:ARecord' 'serverxyz' @{
+resource 'POSHOrigin_ActiveDirectoryDNS:CName' 'serverxyz' @{
     ZoneName = 'mydomain.local'
-    IpAddress = '10.45.195.254'
+    Fqdn = 'www.google.com'
     DnsServer = 'dc01.mydomain.local'
-    CreatePtr = $true
     Credential = Get-POSHOriginSecret 'pscredential' @{
         username = 'mydomain\administrator'
         password = 'K33p1t53cr3tK33p1t5@f3'
