@@ -57,7 +57,7 @@ Parameters
 This example shows how to use the **ARecord** resource within the context of a [POSHOrigin](https://github.com/devblackops/POSHOrigin) configuration file.
 
 ```PowerShell
-resource 'ActiveDirectoryDNS:ARecord' 'serverxyz' @{
+resource 'POSHOrigin_ActiveDirectoryDNS:ARecord' 'serverxyz' @{
     ZoneName = 'mydomain.local'
     IpAddress = '10.45.195.254'
     DnsServer = 'dc01.mydomain.local'
