@@ -55,32 +55,30 @@ class ARecord {
             $cim = $this.Init()
 
             $result.Name = $this.Name
-            $result.Ensure = $this.Ensure
             $result.ZoneName = $this.ZoneName
             $result.DnsServer = $this.DnsServer
             $result.Credential = $this.Credential
             $result.AllowUpdateAny = $this.AllowUpdateAny
             $result.CreatePtr = $this.CreatePtr
 
-            if ($cim) {
-                $params = @{
-                    RRType = 'A'
-                    CimSession = $cim
-                    ZoneName = $this.ZoneName
-                    Name = $this.Name
-                    Verbose = $false
-                }
-                Write-Verbose -Message "Finding [A] Record: $($this.Name) in zone $($this.ZoneName)"
-                $record = Get-DnsServerResourceRecord @params -ErrorAction SilentlyContinue
-                if ($record) {
-                    $result.IPAddress = $record.RecordData.IPv4Address.ToString()
-                    $result.AgeRecord = ($record.TimeStamp -ne $null)
-                    $result.TTL = $record.TimeToLive.TotalSeconds
-                } else {
-                    $result.Ensure = [Ensure]::Absent
-                }
-                $cim | Remove-CimSession
+            $params = @{
+                RRType = 'A'
+                CimSession = $cim
+                ZoneName = $this.ZoneName
+                Name = $this.Name
+                Verbose = $false
             }
+            Write-Verbose -Message "Finding [A] Record: $($this.Name) in zone $($this.ZoneName)"
+            $record = Get-DnsServerResourceRecord @params -ErrorAction SilentlyContinue
+            if ($record) {
+                $result.Ensure = [Ensure]::Present
+                $result.IPAddress = $record.RecordData.IPv4Address.ToString()
+                $result.AgeRecord = ($record.TimeStamp -ne $null)
+                $result.TTL = $record.TimeToLive.TotalSeconds
+            } else {
+                $result.Ensure = [Ensure]::Absent
+            }
+            $cim | Remove-CimSession
         } catch {
             Write-Error -Message 'There was a problem getting the resource'
             Write-Error -Message "$($_.InvocationInfo.ScriptName)($($_.InvocationInfo.ScriptLineNumber)): $($_.InvocationInfo.Line)"
@@ -98,7 +96,7 @@ class ARecord {
                 'Present' {
 
                     # Does the record already exist?
-                    if ($record.Ensure = [ensure]::Present) {
+                    if ($record.Ensure -eq [ensure]::Present) {
                     
                         # Get a copy of the DNS record
                         $params = @{
@@ -187,27 +185,10 @@ class ARecord {
 
     [bool]Test() {
         $record = $this.Get()
-        $pass = $true
-        switch($this.Ensure) {
-            'Present' {
-                if ($record.Ensure -eq [ensure]::Present) {
-                    # Record exists, does it have the correct settings?
-                    Write-Verbose -Message 'Record exists'
-                } else {
-                    Write-Verbose -Message 'Record does not exist'
-                    $pass = $false
-                }
-            }
-            'Absent' {
-                if ($record.Ensure -eq [ensure]::Absent) {
-                    Write-Verbose -Message 'Record does not exist'
-                } else {
-                    Write-Verbose -Message 'Record exists'
-                    $pass = $false
-                }
-            }
-        }
-        return $false
+        Write-Verbose -Message "Validating that record $($this.Name) in ($($this.ZoneName)) is $($this.Ensure.ToString().ToLower())"        
+        if ($this.Ensure -ne $record.Ensure) { return $false }
+        elseif ($this.Ensure -eq [ensure]::Present -and ($record.IPAddress -ne $this.IPAddress)) { return $false }
+        return $true
     }
 }
 
@@ -254,35 +235,33 @@ class CName {
     [CName]Get() {
         $result = [Cname]::new()
         try {
+            $record = $null
             $cim = $this.Init()
 
             $result.Name = $this.Name
-            $result.Ensure = $this.Ensure
             $result.ZoneName = $this.ZoneName
             $result.DnsServer = $this.DnsServer
             $result.Credential = $this.Credential
             $result.AllowUpdateAny = $this.AllowUpdateAny
 
-            if ($cim) {
-                $params = @{
-                    RRType = 'CNAME'
-                    CimSession = $cim
-                    ZoneName = $this.ZoneName
-                    Name = $this.Name
-                    Verbose = $false
-                }
-                Write-Verbose -Message "Finding [CNAME] Record: $($this.Name) in zone $($this.ZoneName)"
-                $record = Get-DnsServerResourceRecord @params -ErrorAction SilentlyContinue
-                if ($record) {
-                    $result.FQDN = $record.RecordData.HostNameAlias.TrimEnd('.')
-                    $result.AgeRecord = ($record.TimeStamp -ne $null)
-                    $result.TTL = $record.TimeToLive.TotalSeconds
-                } else {
-                    $result.Ensure = [Ensure]::Absent
-                }
-                $cim | Remove-CimSession
-            } else {
+            $params = @{
+                RRType = 'CNAME'
+                CimSession = $cim
+                ZoneName = $this.ZoneName
+                Name = $this.Name
+                Verbose = $false
             }
+            Write-Verbose -Message "Finding record: $($this.Name) in zone $($this.ZoneName)"
+            $record = Get-DnsServerResourceRecord @params -ErrorAction SilentlyContinue
+            if ($record) {
+                $result.Ensure = [Ensure]::Present
+                $result.FQDN = $record.RecordData.HostNameAlias.TrimEnd('.')
+                $result.AgeRecord = ($record.TimeStamp -ne $null)
+                $result.TTL = $record.TimeToLive.TotalSeconds
+            } else {
+                $result.Ensure = [Ensure]::Absent
+            }
+            $cim | Remove-CimSession
         } catch {
             Write-Error -Message 'There was a problem getting the resource'
             Write-Error -Message "$($_.InvocationInfo.ScriptName)($($_.InvocationInfo.ScriptLineNumber)): $($_.InvocationInfo.Line)"
@@ -300,7 +279,7 @@ class CName {
                 'Present' {
                     
                     # Does the record already exist?
-                    if ($record.Ensure = [ensure]::Present) {
+                    if ($record.Ensure -eq [ensure]::Present) {
                     
                         # Get a copy of the DNS record
                         $params = @{
@@ -327,7 +306,7 @@ class CName {
                                 CimSession = $cim
                                 Confirm = $true
                             }
-                            Write-Verbose -Message "Changing [CNAME] record: $($this.Name) FQDN -> $($this.FQDN) in zone $($this.ZoneName)"
+                            Write-Verbose -Message "Changing record: $($this.Name) FQDN -> $($this.FQDN)"
                             Set-DnsServerResourceRecord @params
                         }
 
@@ -354,7 +333,7 @@ class CName {
                             CimSession = $cim
                             Verbose = $false
                         }
-                        Write-Verbose -Message "Creating [A] record: $($this.Name) -> $($this.IPAddress) in zone $($this.ZoneName)"
+                        Write-Verbose -Message "Creating record: $($this.Name) -> $($this.FQDN) in zone $($this.ZoneName)"
                         Add-DnsServerResourceRecordCName @params
                     }
                 }
@@ -369,7 +348,7 @@ class CName {
                             Force = $true
                             Verbose = $false
                         }
-                        Write-Verbose -Message "Removing [CNAME] record: $($this.Name) ($($this.FQDN)) from zone $($this.ZoneName)"
+                        Write-Verbose -Message "Removing record: $($this.Name) ($($this.FQDN)) from zone $($this.ZoneName)"
                         Remove-DnsServerResourceRecord @params
                     } else {
                         # Do nothing
@@ -386,26 +365,9 @@ class CName {
 
     [bool]Test() {
         $record = $this.Get()
-        $pass = $true
-        switch($this.Ensure) {
-            'Present' {
-                if ($record.Ensure -eq [ensure]::Present) {
-                    # Record exists, does it have the correct settings?
-                    Write-Verbose -Message 'Record exists'
-                } else {
-                    Write-Verbose -Message 'Record does not exist'
-                    $pass = $false
-                }
-            }
-            'Absent' {
-                if ($record.Ensure -eq [ensure]::Absent) {
-                    Write-Verbose -Message 'Record does not exist'
-                } else {
-                    Write-Verbose -Message 'Record exists'
-                    $pass = $false
-                }
-            }
-        }
-        return $false
+        Write-Verbose -Message "Validating that record $($this.Name) in $($this.ZoneName) is $($this.Ensure.ToString().ToLower())"        
+        if ($this.Ensure -ne $record.Ensure) { return $false }
+        elseif ($this.Ensure -eq [ensure]::Present -and ($record.FQDN -ne $this.FQDN)) { return $false }
+        return $true
     }
 }
