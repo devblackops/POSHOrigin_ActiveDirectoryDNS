@@ -1,5 +1,5 @@
-$modulePath = Split-Path -Parent $MyInvocation.MyCommand.Path | Split-Path -Parent
-$moduleName = Split-Path -Leaf $modulePath
+$moduleName = 'POSHOrigin_ActiveDirectoryDNS'
+$modulePath = Join-Path -Path (Split-Path -Parent $MyInvocation.MyCommand.Path | Split-Path -Parent) -ChildPath $moduleName
 $manifestPath = Join-Path -Path $modulePath -Child "$moduleName.psd1"
 $manifestExists = (Test-Path -Path $manifestPath)
 
