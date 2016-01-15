@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>6CAFC0C6-A428-4d30-A9F9-700E829FEA51</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MyApplication</RootNamespace>
+    <AssemblyName>MyApplication</AssemblyName>
+    <Name>POSHOrigin_ActiveDirectoryDNS</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="appveyor.yml" />
+    <Compile Include="CONTRIBUTING.md" />
+    <Compile Include="LICENSE" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\en-US\about_POSHOrigin_ActiveDirectoryDNS.help.txt" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\Examples\Example_ARecord.ps1" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\Examples\Example_CName.ps1" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\Examples\Example_POSHOrigin_ARecord.ps1" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\Examples\Example_POSHOrigin_CName.ps1" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\Invoke.ps1" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\POSHOrigin_ActiveDirectoryDNS.psd1" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\POSHOrigin_ActiveDirectoryDNS.psm1" />
+    <Compile Include="README.md" />
+    <Compile Include="Tests\AppVeyor.Pester.ps1" />
+    <Compile Include="Tests\Manifest.Tests.ps1" />
+    <Compile Include="Tests\Meta.Tests.ps1" />
+    <Compile Include="Tests\MetaFixers.psm1" />
+    <Compile Include="Tests\TestHelper.psm1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Media\" />
+    <Folder Include="POSHOrigin_ActiveDirectoryDNS\" />
+    <Folder Include="POSHOrigin_ActiveDirectoryDNS\bin\" />
+    <Folder Include="POSHOrigin_ActiveDirectoryDNS\bin\Debug\" />
+    <Folder Include="POSHOrigin_ActiveDirectoryDNS\en-US\" />
+    <Folder Include="POSHOrigin_ActiveDirectoryDNS\Examples\" />
+    <Folder Include="POSHOrigin_ActiveDirectoryDNS\obj\" />
+    <Folder Include="POSHOrigin_ActiveDirectoryDNS\obj\Debug\" />
+    <Folder Include="Tests\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="Build" />
+</Project>
