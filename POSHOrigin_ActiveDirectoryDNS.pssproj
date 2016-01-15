@@ -48,12 +48,8 @@
   <ItemGroup>
     <Folder Include="Media\" />
     <Folder Include="POSHOrigin_ActiveDirectoryDNS\" />
-    <Folder Include="POSHOrigin_ActiveDirectoryDNS\bin\" />
-    <Folder Include="POSHOrigin_ActiveDirectoryDNS\bin\Debug\" />
     <Folder Include="POSHOrigin_ActiveDirectoryDNS\en-US\" />
     <Folder Include="POSHOrigin_ActiveDirectoryDNS\Examples\" />
-    <Folder Include="POSHOrigin_ActiveDirectoryDNS\obj\" />
-    <Folder Include="POSHOrigin_ActiveDirectoryDNS\obj\Debug\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
