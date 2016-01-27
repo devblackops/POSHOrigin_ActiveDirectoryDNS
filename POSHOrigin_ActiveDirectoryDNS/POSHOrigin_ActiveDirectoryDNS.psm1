@@ -365,7 +365,7 @@ class CName {
 
     [bool]Test() {
         $record = $this.Get()
-        Write-Verbose -Message "Validating that record $($this.Name) in $($this.ZoneName) is $($this.Ensure.ToString().ToLower())"        
+        Write-Verbose -Message "Validating that record $($this.Name) in $($this.ZoneName) is $($this.Ensure.ToString().ToLower())"
         if ($this.Ensure -ne $record.Ensure) { return $false }
         elseif ($this.Ensure -eq [ensure]::Present -and ($record.FQDN -ne $this.FQDN)) { return $false }
         return $true
