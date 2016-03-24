@@ -30,6 +30,8 @@
     <Compile Include="appveyor.yml" />
     <Compile Include="CONTRIBUTING.md" />
     <Compile Include="LICENSE" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\arecord.psm1" />
+    <Compile Include="POSHOrigin_ActiveDirectoryDNS\cname.psm1" />
     <Compile Include="POSHOrigin_ActiveDirectoryDNS\en-US\about_POSHOrigin_ActiveDirectoryDNS.help.txt" />
     <Compile Include="POSHOrigin_ActiveDirectoryDNS\Examples\Example_ARecord.ps1" />
     <Compile Include="POSHOrigin_ActiveDirectoryDNS\Examples\Example_CName.ps1" />
