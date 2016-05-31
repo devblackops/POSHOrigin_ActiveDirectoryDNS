@@ -1,6 +1,6 @@
 ﻿@{
-    #RootModule = 'POSHOrigin_ActiveDirectoryDNS.psm1'
-    ModuleVersion = '1.1.3'
+    RootModule = 'POSHOrigin_ActiveDirectoryDNS.psm1'
+    ModuleVersion = '1.1.4'
     GUID = 'f60be00c-0f96-4ecb-9f82-b831bd21c981'
     Author = 'Brandon Olin'
     Copyright = '(c) 2016 Brandon Olin. All rights reserved.'
@@ -9,21 +9,21 @@
         as a Infrastructure as Code framework, but can be used natively by standard DSC configurations as well.
         Integration with POSHOrigin is accomplished via a separate Invoke.ps1 script included in the module.'
     PowerShellVersion = '5.0'
-    NestedModules = @(
-        'ARecord.psm1',
-        'cname.psm1'
-    )
+    #NestedModules = @(
+    #    'ARecord.psm1',
+    #    'cname.psm1'
+    #)
     DscResourcesToExport = @('ARecord', 'CName')
     PrivateData = @{
         PSData = @{
             ProjectUri = 'https://github.com/devblackops/POSHOrigin_ActiveDirectoryDNS'
-            LicenseUri = 'http://www.apache.org/licenses/LICENSE-2.0'
+            LicenseUri = 'https://github.com/devblackops/POSHOrigin_ActiveDirectoryDNS/blob/master/LICENSE'
             Tags = @(
-                'Desired State Configuration',
+                'DesiredStateConfiguration',
                 'DSC',
                 'POSHOrigin',
                 'DNS',
-                'Infrastructure as Code',
+                'InfrastructureAsCode',
                 'IaC'
             )
             ExternalModuleDependencies = 'DnsServer'
